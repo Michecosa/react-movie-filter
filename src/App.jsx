@@ -1,10 +1,10 @@
 import movies from "./data/movies.js";
-import Movies from "./components/Movies.jsx";
+import Main from "./components/Main.jsx";
 
 function App() {
   return (
     <>
-      <Movies moviesList={movies} />
+      <Main movies={movies} />
     </>
   );
 }
