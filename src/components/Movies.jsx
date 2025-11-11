@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import Form from "./Form";
+import MoviesList from "./MoviesList";
 
 export default function Movies({ moviesList }) {
   const [movies, setMovies] = useState(moviesList);
@@ -51,13 +52,7 @@ export default function Movies({ moviesList }) {
         ))}
       </select>
 
-      <ul>
-        {filteredMovies.map((movie, index) => (
-          <li key={index}>
-            {movie.title} - {movie.genre}
-          </li>
-        ))}
-      </ul>
+      <MoviesList filteredMovies={filteredMovies} />
     </>
   );
 }
