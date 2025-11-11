@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import Form from "./Form";
 import MoviesList from "./MoviesList";
+import Search from "./Search";
 
 export default function Movies({ moviesList }) {
   const [movies, setMovies] = useState(moviesList);
@@ -45,20 +46,11 @@ export default function Movies({ moviesList }) {
         setNewGenre={setNewGenre}
       />
 
-      <div className="container mt-4">
-        <select
-          className="form-select mb-3"
-          value={selectedGenre}
-          onChange={(e) => setSelectedGenre(e.target.value)}
-        >
-          <option value="">Tutti i generi</option>
-          {genres.map((genre, index) => (
-            <option key={index} value={genre}>
-              {genre}
-            </option>
-          ))}
-        </select>
-      </div>
+      <Search
+        selectedGenre={selectedGenre}
+        setSelectedGenre={setSelectedGenre}
+        genres={genres}
+      />
 
       <MoviesList filteredMovies={filteredMovies} />
     </>
