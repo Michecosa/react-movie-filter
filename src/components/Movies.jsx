@@ -19,7 +19,12 @@ export default function Movies({ moviesList }) {
     }
   }, [selectedGenre, movies]);
 
-  const genres = [...new Set(movies.map((movie) => movie.genre))];
+  const genres = [];
+  movies.forEach((movie) => {
+    if (!genres.includes(movie.genre)) {
+      genres.push(movie.genre);
+    }
+  });
 
   function handleAddMovie(e) {
     e.preventDefault();
