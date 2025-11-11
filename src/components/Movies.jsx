@@ -1,27 +1,38 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function Movies({ moviesList }) {
   const [movies, setMovies] = useState(moviesList);
-  const [searchGenre, setSearchGenre] = useState("");
-  const [filteredGenre, setFilteredGenre] = useState([]);
+  const [selectedGenre, setSelectedGenre] = useState("");
+  const [filteredMovies, setFilteredMovies] = useState(moviesList);
 
   useEffect(() => {
-    const results = movies.filter((movie) =>
-      movie.genre.toLowerCase().includes(searchGenre.toLowerCase())
-    );
-    setFilteredGenre(results);
-  }, [searchGenre]);
+    if (selectedGenre === "") {
+      setFilteredMovies(movies);
+    } else {
+      setFilteredMovies(
+        movies.filter((movie) => movie.genre === selectedGenre)
+      );
+    }
+  }, [selectedGenre, movies]);
+
+  const genres = [...new Set(movies.map((movie) => movie.genre))];
 
   return (
     <>
-      <input
-        type="text"
-        placeholder="Ricerca per genere..."
-        value={searchGenre}
-        onChange={(e) => setSearchGenre(e.target.value)}
-      />
+      <select
+        value={selectedGenre}
+        onChange={(e) => setSelectedGenre(e.target.value)}
+      >
+        <option value="">Tutti i generi</option>
+        {genres.map((genre, index) => (
+          <option key={index} value={genre}>
+            {genre}
+          </option>
+        ))}
+      </select>
+
       <ul>
-        {filteredGenre.map((movie, index) => (
+        {filteredMovies.map((movie, index) => (
           <li key={index}>
             {movie.title} - {movie.genre}
           </li>
