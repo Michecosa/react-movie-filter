@@ -6,19 +6,26 @@ import Search from "./Search";
 export default function Movies({ moviesList }) {
   const [movies, setMovies] = useState(moviesList);
   const [selectedGenre, setSelectedGenre] = useState("");
+  const [searchTitle, setSearchTitle] = useState("");
   const [filteredMovies, setFilteredMovies] = useState(moviesList);
   const [newTitle, setNewTitle] = useState("");
   const [newGenre, setNewGenre] = useState("");
 
   useEffect(() => {
-    if (selectedGenre === "") {
-      setFilteredMovies(movies);
-    } else {
-      setFilteredMovies(
-        movies.filter((movie) => movie.genre === selectedGenre)
+    let filtered = movies;
+
+    if (selectedGenre !== "") {
+      filtered = filtered.filter((movie) => movie.genre === selectedGenre);
+    }
+
+    if (searchTitle !== "") {
+      filtered = filtered.filter((movie) =>
+        movie.title.toLowerCase().includes(searchTitle.toLowerCase())
       );
     }
-  }, [selectedGenre, movies]);
+
+    setFilteredMovies(filtered);
+  }, [selectedGenre, searchTitle, movies]);
 
   const genres = [];
   movies.forEach((movie) => {
@@ -50,6 +57,8 @@ export default function Movies({ moviesList }) {
         selectedGenre={selectedGenre}
         setSelectedGenre={setSelectedGenre}
         genres={genres}
+        searchTitle={searchTitle}
+        setSearchTitle={setSearchTitle}
       />
 
       <MoviesList filteredMovies={filteredMovies} />
