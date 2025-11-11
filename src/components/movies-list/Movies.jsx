@@ -12,17 +12,13 @@ export default function Movies({ moviesList }) {
   const [newGenre, setNewGenre] = useState("");
 
   useEffect(() => {
-    let filtered = movies;
-
-    if (selectedGenre !== "") {
-      filtered = filtered.filter((movie) => movie.genre === selectedGenre);
-    }
-
-    if (searchTitle !== "") {
-      filtered = filtered.filter((movie) =>
-        movie.title.toLowerCase().includes(searchTitle.toLowerCase())
+    const filtered = movies.filter((movie) => {
+      return (
+        (selectedGenre === "" || movie.genre === selectedGenre) &&
+        (searchTitle === "" ||
+          movie.title.toLowerCase().includes(searchTitle.toLowerCase()))
       );
-    }
+    });
 
     setFilteredMovies(filtered);
   }, [selectedGenre, searchTitle, movies]);
