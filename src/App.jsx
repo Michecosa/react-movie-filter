@@ -1,3 +1,5 @@
+import movies from "./data/movies.js";
+
 function App() {
   return <></>;
 }
